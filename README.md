@@ -1,13 +1,17 @@
 # CAPYBARA
 
-Capybara, a Core-snp Assignment PYthon tool for <i>Acinetobacter baumannii</i>
+Capybara is a Core-snp Assignment PYthon tool for <i>Acinetobacter baumannii</i>. It screens either raw reads or assemblies for :
 
+* Identifying whether a query belongs to the epidemic super-lineage (ESL), a super-set of two predominant international clones: IC1 and IC2.
+* Assignment of query strain into one of the lineages, clusters, and clades in the ESL based on a pre-curated set of SNPs. 
 
-Capybara enables you to identify hierarchical populations in epidemic super-lineage (ESL) of <i>Acinetobacter baumannii</i> using a set of core-genome SNPs. For ESL or citation of Capybara, see DOI: [10.21203/rs.3.rs-4129268/v1](https://doi.org/10.21203/rs.3.rs-4224555/v1).
+## Citation
+Shengkai Li, Heng Li, Guilai Jiang, Shengke Wang, Min Wang, Yilei Wu, Xiao Liu, Ling Zhong, Shichang Xie, Yi Ren, Yongliang Lou, Jimei Du, Zhemin Zhou, 2024, Emergence and Global Spread of a Dominant Multidrug-Resistant Variant in *Acinetobacter baumannii*, [https://www.nature.com/articles/s41467-025-58106-9](https://www.nature.com/articles/s41467-025-58106-9)
+
+------
 
 ## Installation:
-
-Capybara was devoloped and tested in Python 3.9.0, and requires a several modules:
+Capybara was devoloped and tested in Python 3.9.0, and requires several modules:
 
 ~~~~~~~~~~
 minimap2
@@ -19,7 +23,7 @@ bcftools
 You can easily install these packages using command below:
 
 ~~~~~~~~~~
-conda install -c bio-conda samtools bcftools minimap2 mash
+conda install -c bioconda samtools bcftools minimap2 mash
 ~~~~~~~~~~
 
 Then you can use git to clone Capybara into your PC.
@@ -33,10 +37,10 @@ git clone git@github.com:Zhou-lab-SUDA/CAPYBARA.git
 ~~~~~~~~~~
 $ cd /path/to/Capybara/
 
-$ capy.py -i Examples/2.5.6.fna
+$ python capy.py -i examples/2.5.6.fa
 ~~~~~~~~~~
 
-It will generate a report file for Examples/2.5.6.fna about its population.
+It will generate a report file for Examples/2.5.6.fa about its population.
 
 A single run for an assembled genome will finish <3 minutes for a 4 CPUs laptop (>10 minutes for short reads).
 
@@ -47,24 +51,38 @@ $ Usage: capy.py [OPTIONS]
 
 Options:
 
-  -i, --query TEXT  [Required] Input data, both assembled genome or short reads are acceptable.
+  -i, --input TEXT  [Required] Input data, both assembled genome or short reads are acceptable.
 
-  -p, --prefix TEXT [Optional] Prefix for output file. Default as Capy.
+  -o, --output TEXT [Optional] Prefix for output file. Default as Capy.
 
-  -t, --threads INTEGER [Optional] Number of process to use. default: 8
+  -t, --threads INTEGER [Optional] Number of process to use. default: 4.
 
-  -l, --list TEXT   [Optional] A file containing list of query files, one per line.
+  -m, --metagenomic Metagenomic mode, skip CC assignment.
+
+  --subsample SUBSAMPLE [0-1] Subsample proportion when handling short reads.
+
+  --min-snp-depth MIN_SNP_DEPTH
+
+  --min-allele-frac MIN_ALLELE_FRAC
 
   --help    Show this message and exit.
 
 ~~~~~~~~~~
 
-Capybara generates a report file in format below:
+Capybara generates three report files:
 
-| query | ESL | Lineage | Variant |
-| ---- | ---- | ---- | ---- |
-| 2.5.6.fna | True | 2.5 | 2.5.6 |
-| IC7.fna | False | - | - |
+[Output].summary.tsv:
+| sample | mode | lineage | sublineage | GC1_votes | GC2_votes | reads_total | reads_mapped | breadth | variant_cov | variant_total |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 2.5.6.fa | metagenomic | NA | NA | NA | NA | 1472092 | 12905 | 0.001392 | 0 | 50 |
+
+[Output].markers.tsv:
+
+Detailed calling description for each SNP barcode.
+
+[Output].summary.tsv:
+
+Json format SNP coverage summary.
 
 ## Work flow and Reproduction Instructions
 
@@ -97,3 +115,9 @@ Reference genome for ESL.
 * msh/*.msh
 ~~~
 5,824 pre-sketched files by Mash sketch.
+~~~
+### Our pulished release
+You may also be interested [KleTy](https://github.com/Zhou-lab-SUDA/KleTy), a pipeline for analysis of Klebsiella and can also genotype plasmids from short-reads file.
+
+
+<a href="https://zenodo.org/doi/10.5281/zenodo.11349698"><img src="https://zenodo.org/badge/803854575.svg" alt="DOI"></a>
