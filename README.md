@@ -72,13 +72,16 @@ Options:
 Capybara generates three report files:
 
 [Output].summary.tsv (Metagenomic version will NOT show the lineage/sublineage assignment):
+
 | sample | mode | lineage | sublineage | GC1_votes | GC2_votes | reads_total | reads_mapped  | best_score | variant_total |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| 2.5.6.fa | metagenomic | NA | NA | NA | NA | 1472092 | 12905 | 0.001392 | 0 | 0 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 2.5.6.fa | metagenomic | NA | NA | NA | NA | 1472092 | 12905 | 0 | 0 |
+
 [Output].summary.tsv (Isolate version)
+
 | sample | mode | lineage | sublineage | GC1_votes | GC2_votes | reads_total | reads_mapped  | best_score | variant_total |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| 2.5.6.fa | isolate | 2.5 | 2.5.6 | 0 | 7 | 107 | 103 | 0.001392 | 1.0 | 50 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 2.5.6.fa | isolate | 2.5 | 2.5.6 | 0 | 7 | 107 | 103 | 1.0 | 50 |
 
 [Output].markers.tsv:
 
